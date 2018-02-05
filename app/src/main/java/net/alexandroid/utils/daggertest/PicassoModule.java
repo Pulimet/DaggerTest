@@ -9,17 +9,22 @@ import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
 
-@Module
+@Module(includes = {NetworkModule.class, ContextModule.class })
 public class PicassoModule {
 
     @Provides
-    public Picasso picasso(Context context, OkHttpClient okHttpClient) {
-            return new Picasso.Builder(context)
-                    .downloader(new OkHttp3Downloader(okHttpClient))
-                    .build();
+    @MyApplicationScope
+    public Picasso picasso(Context context, OkHttp3Downloader okHttp3Downloader) {
+        return new Picasso.Builder(context)
+                .downloader(okHttp3Downloader)
+                .build();
     }
 
-
+    @Provides
+    @MyApplicationScope
+    public OkHttp3Downloader okHttp3Downloader(OkHttpClient okHttpClient) {
+        return new OkHttp3Downloader(okHttpClient);
+    }
 
 
 }
