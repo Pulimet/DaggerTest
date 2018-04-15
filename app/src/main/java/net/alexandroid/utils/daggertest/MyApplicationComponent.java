@@ -7,7 +7,8 @@ import dagger.Component;
 @MyApplicationScope
 @Component(modules = {PicassoModule.class, TestModule.class})
 public interface MyApplicationComponent {
-    Picasso getPicasso();
 
-    void injectTestModule(MainActivity mainActivity);
+    void inject(MainActivity mainActivity);
+
+    Picasso getPicasso();
 }
